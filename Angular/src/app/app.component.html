@@ -1,5 +1,8 @@
 <h2>
   {{title}}
-  <dialog-button></dialog-button>
-  <p-calendar [(ngModel)]="dateTime" [timeOnly]="true" hourFormat="24"></p-calendar>
+  <dialog-button></dialog-button> 
 </h2>
+<div class="ui-g-12 ui-md-4">
+      <h3>Time Only </h3>
+      <p-calendar [(ngModel)]="dateTime" [timeOnly]="true" hourFormat="24"></p-calendar>
+</div>

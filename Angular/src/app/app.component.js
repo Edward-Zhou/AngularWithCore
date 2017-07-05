@@ -21,8 +21,10 @@ AppComponent = __decorate([
     core_1.Component({
         selector: 'app-root',
         templateUrl: './app.component.html',
-        styles: ['./app.component.css',
-            './test.css'
+        styleUrls: ['./app.component.css',
+            '../../node_modules/primeng/resources/themes/omega/theme.css',
+            '../../node_modules/primeng/resources/primeng.min.css',
+            '../../node_modules/font-awesome/css/font-awesome.min.css'
         ]
     }),
     __metadata("design:paramtypes", [])
