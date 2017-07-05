@@ -15,6 +15,7 @@ var app_component_1 = require("./app.component");
 var dialogWindow_1 = require("../component/dialog/dialogWindow");
 var dialog_button_1 = require("../component/dialog/dialog.button");
 var material_1 = require("@angular/material");
+var primeng_1 = require("primeng/primeng");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -33,6 +34,7 @@ AppModule = __decorate([
             http_1.HttpModule,
             animations_1.BrowserAnimationsModule,
             material_1.MaterialModule,
+            primeng_1.CalendarModule
         ],
         entryComponents: [dialogWindow_1.DialogWindowComponent],
         providers: [],

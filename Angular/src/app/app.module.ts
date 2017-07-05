@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import {DialogWindowComponent} from '../component/dialog/dialogWindow';
 import {DialogButtonComponent} from '../component/dialog/dialog.button'
 import { MaterialModule } from "@angular/material";
+import { CalendarModule} from 'primeng/primeng';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { MaterialModule } from "@angular/material";
     HttpModule,
     BrowserAnimationsModule,
     MaterialModule,
-
+    CalendarModule
   ],
   entryComponents:[DialogWindowComponent],
   providers: [],
