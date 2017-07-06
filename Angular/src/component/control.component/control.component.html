@@ -1,0 +1,14 @@
+<h1>Control Component</h1>
+<div>
+    当前的消息：  {{message}}
+</div>
+<div>
+    <label>This is Confirm Dialog</label>
+    <p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425"></p-confirmDialog>
+    <button type="text" (click)="confirm()" pButton icon="fa-check" label="Confirm"></button>
+</div>
+<div>
+    <label>This is DatePicker</label>
+    <h3>Time Only </h3>
+    <p-calendar [(ngModel)]="dateTime" [timeOnly]="true" hourFormat="24"></p-calendar>
+</div>

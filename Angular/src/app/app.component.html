@@ -1,8 +1,15 @@
 <h2>
   {{title}}
-  <dialog-button></dialog-button> 
 </h2>
+  <nav>
+    <a routerLink="/control" routerLinkActive="active">Control</a>
+  </nav>
 <div class="ui-g-12 ui-md-4">
-      <h3>Time Only </h3>
+  
+  <router-outlet></router-outlet>
+  <!--<control-component></control-component>-->
+      <!--<h3>Time Only </h3>
       <p-calendar [(ngModel)]="dateTime" [timeOnly]="true" hourFormat="24"></p-calendar>
+      <p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425"></p-confirmDialog>
+      <button type="text" (click)="confirm()" pButton icon="fa-check" label="Confirm"></button>-->
 </div>
