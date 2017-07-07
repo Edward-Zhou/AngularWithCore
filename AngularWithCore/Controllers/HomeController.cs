@@ -12,6 +12,28 @@ namespace AngularWithCore.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public string Save(string value)
+        {
+            return value;
+        }
+        [HttpGet]
+        public IActionResult SaveView()
+        {
+            return View();
+        }
+        [HttpGet]
+        public string GetData()
+        {
+            return "Hello World";
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public string SaveViewPost()
+        {
+            return "OK";
+        }
 
         public IActionResult About()
         {

@@ -5,5 +5,5 @@
 .gitignore
 node_modules
 npm-debug.log
-**/Angular/src/**/*.map
-**/Angular/src/**/*.js
+AngularWithCore/Angular/src/**/*.map
+AngularWithCore/Angular/src/**/*.js

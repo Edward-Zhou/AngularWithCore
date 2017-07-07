@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var platform_browser_1 = require("@angular/platform-browser");
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
 var animations_1 = require("@angular/platform-browser/animations");
@@ -16,6 +17,12 @@ var dialogWindow_1 = require("../component/dialog/dialogWindow");
 var dialog_button_1 = require("../component/dialog/dialog.button");
 var material_1 = require("@angular/material");
 var primeng_1 = require("primeng/primeng");
+var control_component_1 = require("../component/control.component/control.component");
+var appRoutes = [
+    { path: 'app', component: app_component_1.AppComponent },
+    { path: 'control', component: control_component_1.ControlComponent },
+    { path: '', component: app_component_1.AppComponent }
+];
 var AppModule = (function () {
     function AppModule() {
     }
@@ -27,6 +34,7 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             dialogWindow_1.DialogWindowComponent,
             dialog_button_1.DialogButtonComponent,
+            control_component_1.ControlComponent
         ],
         imports: [
             platform_browser_1.BrowserModule,
@@ -34,7 +42,9 @@ AppModule = __decorate([
             http_1.HttpModule,
             animations_1.BrowserAnimationsModule,
             material_1.MaterialModule,
-            primeng_1.CalendarModule
+            primeng_1.CalendarModule,
+            primeng_1.ConfirmDialogModule,
+            router_1.RouterModule.forRoot(appRoutes, { enableTracing: true })
         ],
         entryComponents: [dialogWindow_1.DialogWindowComponent],
         providers: [],

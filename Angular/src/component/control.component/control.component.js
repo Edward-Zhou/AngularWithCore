@@ -11,36 +11,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var primeng_1 = require("primeng/primeng");
-var AppComponent = (function () {
-    function AppComponent(confirmationService) {
-        this.confirmationService = confirmationService;
-        this.title = '';
-        this.title = 'My First Angular App';
+var home_service_1 = require("../../services/home.service");
+var ControlComponent = (function () {
+    function ControlComponent(confirmationSvc, homeSvc) {
+        this.confirmationSvc = confirmationSvc;
+        this.homeSvc = homeSvc;
+        this.message = '';
     }
-    AppComponent.prototype.confirm = function () {
+    ControlComponent.prototype.confirm = function () {
         var _this = this;
-        this.confirmationService.confirm({
+        this.confirmationSvc.confirm({
             message: 'Are you sure that you want to perform this action?',
             accept: function () {
                 //Actual logic to perform a confirmation
-                _this.title = "Deleted";
+                _this.message = "Deleted";
             },
             reject: function () {
-                _this.title = "Reject";
+                _this.message = "Reject";
             }
         });
     };
-    return AppComponent;
+    ControlComponent.prototype.save = function () {
+        this.homeSvc.save().subscribe(function (result) {
+            console.log(result);
+        });
+    };
+    return ControlComponent;
 }());
-AppComponent = __decorate([
+ControlComponent = __decorate([
     core_1.Component({
-        selector: 'app-root',
-        templateUrl: './app.component.html',
-        styleUrls: ['./app.component.css'
-        ],
-        providers: [primeng_1.ConfirmationService]
+        selector: 'control-component',
+        templateUrl: './control.component.html',
+        styleUrls: ['./control.component.css'],
+        providers: [primeng_1.ConfirmationService,
+            home_service_1.HomeService]
     }),
-    __metadata("design:paramtypes", [primeng_1.ConfirmationService])
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+    __metadata("design:paramtypes", [primeng_1.ConfirmationService, home_service_1.HomeService])
+], ControlComponent);
+exports.ControlComponent = ControlComponent;
+//# sourceMappingURL=control.component.js.map

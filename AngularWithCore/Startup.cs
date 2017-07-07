@@ -12,6 +12,10 @@ using Microsoft.Extensions.Logging;
 using AngularWithCore.Data;
 using AngularWithCore.Models;
 using AngularWithCore.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
 namespace AngularWithCore
 {
@@ -39,6 +43,7 @@ namespace AngularWithCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAntiforgery(options=>options.HeaderName="X-XSRF-TOKEN");
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -46,16 +51,27 @@ namespace AngularWithCore
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigin",
+                    cbuilder => cbuilder.AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader()
+                                .AllowCredentials());
+            });
             services.AddMvc();
 
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAllOrigin"));
+            });
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,IAntiforgery antiforgery)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -70,7 +86,19 @@ namespace AngularWithCore
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            //app.Use(next => context =>
+            //{
+            //    string path = context.Request.Path.Value;
 
+            //    // We can send the request token as a JavaScript-readable cookie, 
+            //    // and Angular will use it by default.
+            //    var tokens = antiforgery.GetAndStoreTokens(context);
+            //    context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken,
+            //        new CookieOptions() { HttpOnly = false });
+
+            //    return next(context);
+            //});
+            app.UseCors("AllowAllOrigin");
             app.UseStaticFiles();
 
             app.UseIdentity();

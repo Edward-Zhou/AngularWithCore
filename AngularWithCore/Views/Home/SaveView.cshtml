@@ -1,0 +1,11 @@
+
+@{
+    ViewData["Title"] = "SaveView";
+}
+
+<h2>SaveView</h2>
+<form action="SaveViewPost", method="post">
+    @Html.AntiForgeryToken();
+    <button type="submit">Submit</button>
+</form>
+
