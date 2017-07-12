@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace AngularWithCore.Models
 {
-    // Add profile data for application users by adding properties to the ApplicationUser class
-    public class ApplicationUser : IdentityUser
+    public class Forum
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string ShortName { get; set; }
         public List<Thread> Threads { get; set; }
         public List<ApplicationUser_Forum> ApplicationUser_Forums { get; set; }
+
     }
 }

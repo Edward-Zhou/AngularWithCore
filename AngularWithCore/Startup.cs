@@ -111,6 +111,9 @@ namespace AngularWithCore
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //populate database
+            DbInitializer.Initialize(app.ApplicationServices).Wait();
         }
     }
 }

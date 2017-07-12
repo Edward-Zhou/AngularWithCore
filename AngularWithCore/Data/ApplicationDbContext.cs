@@ -14,13 +14,24 @@ namespace AngularWithCore.Data
             : base(options)
         {
         }
-
+        public DbSet<Thread> Thread { get; set; }
+        public DbSet<Forum> Forum { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+            builder.Entity<ApplicationUser_Forum>()
+                   .HasKey(af=>new { af.ApplicationUserId, af.ForumId});
+            builder.Entity<ApplicationUser_Forum>()
+                   .HasOne(af => af.Forum)
+                   .WithMany(f => f.ApplicationUser_Forums)
+                   .HasForeignKey(f=>f.ForumId);
+            builder.Entity<ApplicationUser_Forum>()
+                   .HasOne(af => af.ApplicationUser)
+                   .WithMany(f => f.ApplicationUser_Forums)
+                   .HasForeignKey(f => f.ApplicationUserId);
         }
     }
 }
