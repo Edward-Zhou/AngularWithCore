@@ -36,6 +36,17 @@ var ControlComponent = (function () {
             console.log(result);
         });
     };
+    ControlComponent.prototype.get = function () {
+        this.homeSvc.get().subscribe(function (result) {
+            console.log(result);
+        });
+    };
+    ControlComponent.prototype.GetJson = function () {
+        $.get('http://localhost:9336/api/values/GetJSON')
+            .done(function (data) {
+            console.log(JSON.parse(data));
+        });
+    };
     return ControlComponent;
 }());
 ControlComponent = __decorate([

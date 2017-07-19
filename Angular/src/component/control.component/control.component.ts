@@ -1,7 +1,8 @@
 import{ Component} from '@angular/core';
 import {CalendarModule, ConfirmDialogModule,ConfirmationService} from 'primeng/primeng';
 import { HomeService} from '../../services/home.service'
-
+declare var jquery:any;
+declare var $ :any;
 @Component({
     selector:'control-component',
     templateUrl:'./control.component.html',
@@ -38,5 +39,12 @@ export class ControlComponent{
         this.homeSvc.get().subscribe(result=>{
             console.log(result);
         });
+    }
+    GetJson(){
+        $.get('http://localhost:9336/api/values/GetJSON')
+        .done(function (data:any) {
+            console.log(JSON.parse(data));
+        });
+
     }
 }

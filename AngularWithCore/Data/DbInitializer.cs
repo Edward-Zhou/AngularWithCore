@@ -54,22 +54,23 @@ namespace AngularWithCore.Data
             using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var db = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
-                foreach (var item in entities)
+                foreach (TEntity item in entities)
                 {
-                    var state = existingData.Any(data => propertyToMatch(data).Equals(propertyToMatch(item))) ? EntityState.Modified : EntityState.Added;
-                    if (state == EntityState.Added)
-                    {
-                        await db.Set<TEntity>().AddAsync(item);
-                        resultList.Add(item);
-                    }
-                    else
-                    {
-                        var existData = db.Set<TEntity>().Where(data => propertyToMatch(data).Equals(propertyToMatch(item))).FirstOrDefault();
-                        db.Set<TEntity>().Update(item);
-                        resultList.Add(existData);
-                    }
+                    db.Entry(item).State = EntityState.Modified;
+                    //var state = existingData.Any(data => propertyToMatch(data).Equals(propertyToMatch(item))) ? EntityState.Modified : EntityState.Added;
+                    //if (state == EntityState.Added)
+                    //{
+                    //    await db.Set<TEntity>().AddAsync(item);
+                    //    resultList.Add(item);
+                    //}
+                    //else
+                    //{
+                    //    db.Entry(item).State = state;
+                    //    //db.Set<TEntity>().Update(item);
+                    //    resultList.Add(item);
+                    //}
                 }
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return resultList;
             }
         }
