@@ -27,8 +27,11 @@ namespace AngularWithCore.Data
         private static async Task InsertTestData(IServiceProvider serviceProvider)
         {
             //add users
-            var users = GetUsers();
-            await AddOrUpdateAsync(serviceProvider,u=>u.Id,users);
+            //var users = GetUsers();
+            //await AddOrUpdateAsync(serviceProvider,u=>u.Id,users);
+            //add forms
+            var forums = GetForums();
+            await AddOrUpdateAsync(serviceProvider,f=>f.Id, forums);
         }
         public static IEnumerable<ApplicationUser> GetUsers()
         {
@@ -38,6 +41,15 @@ namespace AngularWithCore.Data
                 new ApplicationUser{ Id="3",UserName="Tony"}
             };
             return users;
+        }
+        public static IEnumerable<Forum> GetForums()
+        {
+            var forums = new Forum[] {
+                //new Forum {  Name="OfficeDev" },
+                //new Forum {  Name="WCF"}
+                new Forum {Id=1 , Name="New WCF"}
+            };
+            return forums;
         }
 
         private static async Task<IEnumerable<TEntity>> AddOrUpdateAsync<TEntity>(IServiceProvider serviceProvider,
@@ -56,19 +68,18 @@ namespace AngularWithCore.Data
                 var db = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
                 foreach (TEntity item in entities)
                 {
-                    db.Entry(item).State = EntityState.Modified;
-                    //var state = existingData.Any(data => propertyToMatch(data).Equals(propertyToMatch(item))) ? EntityState.Modified : EntityState.Added;
-                    //if (state == EntityState.Added)
-                    //{
-                    //    await db.Set<TEntity>().AddAsync(item);
-                    //    resultList.Add(item);
-                    //}
-                    //else
-                    //{
-                    //    db.Entry(item).State = state;
-                    //    //db.Set<TEntity>().Update(item);
-                    //    resultList.Add(item);
-                    //}
+                    var state = existingData.Any(data => propertyToMatch(data).Equals(propertyToMatch(item))) ? EntityState.Modified : EntityState.Added;
+                    if (state == EntityState.Added)
+                    {
+                        await db.Set<TEntity>().AddAsync(item);
+                        resultList.Add(item);
+                    }
+                    else
+                    {
+                        db.Entry(item).State = state;
+                        db.Set<TEntity>().Update(item);
+                        resultList.Add(item);
+                    }
                 }
                 await db.SaveChangesAsync();
                 return resultList;

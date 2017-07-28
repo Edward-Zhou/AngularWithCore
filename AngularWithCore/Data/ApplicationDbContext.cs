@@ -33,5 +33,6 @@ namespace AngularWithCore.Data
                    .WithMany(f => f.ApplicationUser_Forums)
                    .HasForeignKey(f => f.ApplicationUserId);
         }
+        public DbSet<AngularWithCore.Models.ApplicationUser> ApplicationUser { get; set; }
     }
 }

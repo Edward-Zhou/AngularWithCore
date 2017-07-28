@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using AngularWithCore.Models;
 using AngularWithCore.Models.AccountViewModels;
 using AngularWithCore.Services;
+using AngularWithCore.Data;
 
 namespace AngularWithCore.Controllers
 {
@@ -24,6 +25,7 @@ namespace AngularWithCore.Controllers
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
         private readonly string _externalCookieScheme;
+        private readonly ApplicationDbContext _context;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -31,7 +33,8 @@ namespace AngularWithCore.Controllers
             IOptions<IdentityCookieOptions> identityCookieOptions,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -39,6 +42,7 @@ namespace AngularWithCore.Controllers
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _context = context;
         }
 
         //
@@ -69,6 +73,9 @@ namespace AngularWithCore.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    //var current_User =await _userManager.GetUserAsync(HttpContext.User);
+                    //string current_User_Id = "" + current_User.Id;
+                    var user = _context.Users.FirstOrDefault(x => x.Email == model.Email);
                     _logger.LogInformation(1, "User logged in.");
                     return RedirectToLocal(returnUrl);
                 }

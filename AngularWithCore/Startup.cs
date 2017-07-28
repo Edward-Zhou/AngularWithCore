@@ -43,6 +43,7 @@ namespace AngularWithCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddAntiforgery(options=>options.HeaderName="X-XSRF-TOKEN");
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -86,18 +87,14 @@ namespace AngularWithCore
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            //app.Use(next => context =>
-            //{
-            //    string path = context.Request.Path.Value;
 
-            //    // We can send the request token as a JavaScript-readable cookie, 
-            //    // and Angular will use it by default.
-            //    var tokens = antiforgery.GetAndStoreTokens(context);
-            //    context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken,
-            //        new CookieOptions() { HttpOnly = false });
-
-            //    return next(context);
-            //});
+            //add custom header
+            app.Use(next => context =>
+            {
+                var headers = context.Request.Headers;
+                headers.Add("New Header","New Header Value");
+                return next(context);
+            });
             app.UseCors("AllowAllOrigin");
             app.UseStaticFiles();
 
