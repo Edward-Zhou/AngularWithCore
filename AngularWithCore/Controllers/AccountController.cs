@@ -415,6 +415,7 @@ namespace AngularWithCore.Controllers
             {
                 return View("Error");
             }
+            
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 

@@ -22,6 +22,7 @@ namespace AngularWithCore.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+            builder.Entity<ApplicationUser>().Property(p => p.ConcurrencyStamp).IsConcurrencyToken(false);
             builder.Entity<ApplicationUser_Forum>()
                    .HasKey(af=>new { af.ApplicationUserId, af.ForumId});
             builder.Entity<ApplicationUser_Forum>()

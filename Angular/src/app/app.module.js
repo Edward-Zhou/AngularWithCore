@@ -18,9 +18,11 @@ var dialog_button_1 = require("../component/dialog/dialog.button");
 var material_1 = require("@angular/material");
 var primeng_1 = require("primeng/primeng");
 var control_component_1 = require("../component/control.component/control.component");
+var jquery_1 = require("../component/jquery.component/jquery");
 var appRoutes = [
     { path: 'app', component: app_component_1.AppComponent },
     { path: 'control', component: control_component_1.ControlComponent },
+    { path: 'jquery', component: jquery_1.JqueryComponent },
     { path: '', component: app_component_1.AppComponent }
 ];
 var AppModule = (function () {
@@ -34,7 +36,8 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             dialogWindow_1.DialogWindowComponent,
             dialog_button_1.DialogButtonComponent,
-            control_component_1.ControlComponent
+            control_component_1.ControlComponent,
+            jquery_1.JqueryComponent
         ],
         imports: [
             platform_browser_1.BrowserModule,

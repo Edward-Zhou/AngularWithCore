@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using AngularWithCore.Models;
 using SampleSvc;
 using AngularWithCore.Helper;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace AngularWithCore.Controllers
 {
@@ -24,6 +27,7 @@ namespace AngularWithCore.Controllers
         {
             //var current_User = _userManager.GetUserAsync(HttpContext.User).Result;
             //string current_User_Id = "" + current_User.Id;
+            var isAuthenticated = User.Identity.IsAuthenticated;
             var header = Request.Headers["New Header"];
             return View();
         }
@@ -71,9 +75,41 @@ namespace AngularWithCore.Controllers
             return View();
         }
 
+        public IActionResult Login()
+        {
+            HttpClient client = new HttpClient();
+
+            StringContent content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(new Login { Username = "Test", Password = "1235" }), Encoding.UTF8, "application/json");
+            var response = client.PostAsync("http://localhost:9336/api/values/WithOutBody", content).Result;
+            var result = response.Content.ReadAsStringAsync();
+            return Ok(result);
+            //Login login = new Login() { Username = "username", Password = "password" };
+            //HttpClient client = new HttpClient()
+            //{
+            //    BaseAddress = new Uri("http://localhost:44612/")
+            //};
+            //MediaTypeWithQualityHeaderValue contentType = new MediaTypeWithQualityHeaderValue("application/json");
+            //client.DefaultRequestHeaders.Accept.Add(contentType);
+            //HttpResponseMessage response = client.PostAsJsonAsync("/api/User/Login", login).Result;
+
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    return View();
+            //}
+            //else
+            //{
+            //    return View();
+            //}
+        }
+
         public IActionResult Error()
         {
             return View();
         }
+    }
+    public class Login
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

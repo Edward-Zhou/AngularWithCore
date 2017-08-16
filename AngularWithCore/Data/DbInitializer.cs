@@ -27,8 +27,8 @@ namespace AngularWithCore.Data
         private static async Task InsertTestData(IServiceProvider serviceProvider)
         {
             //add users
-            //var users = GetUsers();
-            //await AddOrUpdateAsync(serviceProvider,u=>u.Id,users);
+            var users = GetUsers();
+            await AddOrUpdateAsync(serviceProvider, u => u.Id, users);
             //add forms
             var forums = GetForums();
             await AddOrUpdateAsync(serviceProvider,f=>f.Id, forums);
@@ -36,18 +36,16 @@ namespace AngularWithCore.Data
         public static IEnumerable<ApplicationUser> GetUsers()
         {
             var users = new ApplicationUser[] {
-                //new ApplicationUser{ Id="1", UserName="Tom" },
-                //new ApplicationUser{ Id="2",UserName="Jim"},
-                new ApplicationUser{ Id="3",UserName="Tony"}
+                new ApplicationUser{ Id="1", UserName="Vicky", ConcurrencyStamp=Guid.NewGuid().ToString() }
+               //,new ApplicationUser{ Id="2",UserName="Jim", ConcurrencyStamp=Guid.NewGuid().ToString()},
             };
             return users;
         }
         public static IEnumerable<Forum> GetForums()
         {
             var forums = new Forum[] {
-                //new Forum {  Name="OfficeDev" },
-                //new Forum {  Name="WCF"}
-                new Forum {Id=1 , Name="New WCF"}
+                new Forum {  Name="OfficeDev" },
+                new Forum {  Name="WCF"}
             };
             return forums;
         }

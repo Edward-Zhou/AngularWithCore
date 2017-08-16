@@ -11,10 +11,12 @@ import {DialogButtonComponent} from '../component/dialog/dialog.button'
 import { MaterialModule } from "@angular/material";
 import { CalendarModule,ConfirmDialogModule} from 'primeng/primeng';
 import { ControlComponent } from "../component/control.component/control.component";
+import { JqueryComponent } from "../component/jquery.component/jquery";
 
 const appRoutes:Routes=[
   {path:'app',component:AppComponent},
   {path:'control',component:ControlComponent},
+  {path:'jquery',component:JqueryComponent},
   {path:'',component:AppComponent}
 ];
 
@@ -23,7 +25,8 @@ const appRoutes:Routes=[
     AppComponent,
     DialogWindowComponent,
     DialogButtonComponent,
-    ControlComponent
+    ControlComponent,
+    JqueryComponent
   ],
   imports: [
     BrowserModule,
